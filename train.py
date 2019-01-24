@@ -27,6 +27,13 @@ def temas_a_num(temass):
 
     return ntemas
 
+def temae_a_num(tema, i):
+    try:
+        return temas.temase_dics[i][tema.strip().lower()]
+    except:
+        # print("Tema erróneo: %s" % (tema,))
+        return None
+
 def to_one_hot(i, dim):
     i = int(i)
     z = np.zeros((dim,))
@@ -41,11 +48,28 @@ noticias["ct"] = noticias["temag"].apply(tema_a_num)
 
 X_train, X_test, y_train, y_test = train_test_split(noticias["texto"], noticias["ct"], random_state=0)
 
-
 tc = tclassifier()
 tc.fit(X_train, y_train)
 print("Estimated accuracy: %.02f" % tc.score(X_test, y_test))
 
 tc = tclassifier()
 tc.fit(noticias["texto"], noticias["ct"])
-tc.save("model.pkl")
+tc.save("models/model.pkl")
+
+# temas especificos
+for i in range(len(temas.TEMASG)):
+    tedf = noticias[noticias["ct"] == i]
+    tedf["cte"] = tedf["tema"].apply(lambda x: temae_a_num(x,i))
+    tedf = tedf[["cte","texto"]]
+    tedf = tedf.dropna()
+    tedf["cte"] = tedf["cte"].apply(int)
+    X_train, X_test, y_train, y_test = train_test_split(tedf["texto"], tedf["cte"], random_state=0)
+
+    tc = tclassifier()
+    tc.fit(X_train, y_train)
+    print("Estimated accuracy for %s: %.02f" % (temas.TEMASG[i], tc.score(X_test, y_test)))
+
+    tc = tclassifier()
+    tc.fit(tedf["texto"], tedf["cte"])
+    tc.save("models/model%d.pkl" % i)
+

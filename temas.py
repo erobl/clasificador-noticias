@@ -37,6 +37,8 @@ TEMAS.append(["adultos mayores", "comunicación", "cultura", "educación", "gén
              "salud", "seguridad", "urbanismo", "vivienda", "servicio militar", "servicios públicos",
              "turismo"])
 
+## Temas generales
+
 temas_dic = {}
 for i in range(len(TEMASG)):
     temas_dic[TEMASG[i]] = i
@@ -47,3 +49,22 @@ temas_dic["infraestructura vial y transporte"] = temas_dic["infraestructura y tr
 temas_dic["mundo"] = temas_dic["asuntos internacionales"]
 temas_dic["nacionales"] = temas_dic["política"]
 temas_dic["asuntos"] = temas_dic["asuntos sociales"]
+
+## Temas específicos
+
+temase_dics = []
+for i in range(len(TEMASG)):
+    dic = {}
+    for j in range(len(TEMAS[i])):
+        dic[TEMAS[i][j]] = j
+    temase_dics.append(dic)
+
+# sinonimos
+temase_dics[0]["judiciales"] = temase_dics[0]["juicios"]
+temase_dics[0]["accidentes"] = temase_dics[0]["accidente"]
+temase_dics[0]["femicidios"] = temase_dics[0]["femicidio"]
+temase_dics[0]["desaparecido"] = temase_dics[0]["desapariciones"]
+temase_dics[0]["asaltos"] = temase_dics[0]["asalto"]
+temase_dics[0]["narcotráfico y crimen organizado"] = temase_dics[0]["narcotrafico y crimen organizado"]
+temase_dics[0]["desaparecida"] = temase_dics[0]["desapariciones"]
+
