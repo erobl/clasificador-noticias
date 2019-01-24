@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <title>Clasificador</title>
+        <script type="text/javascript">
+            function sendtoserver() {
+                val = document.getElementById("text").value
+                console.log(val)
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/classify", true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({
+                    text: val
+                }));
+
+                xhr.onload = function() {
+                  var data = JSON.parse(this.responseText);
+                  console.log(data);
+                  res = document.getElementById("results")
+                  res.innerHTML = ""
+                  for(var i = 0; i < data.general_proba.length; i++) {
+                      if(data.general_class == i) {
+                        res.innerHTML += "<strong style='color: red;'>" + data.general_names[i] + ": " + (Math.round(data.general_proba[i] * 100) / 100).toString() + "</strong>"
+                      } else {
+                          res.innerHTML += data.general_names[i]
+                          res.innerHTML += ": "
+                          res.innerHTML += (Math.round(data.general_proba[i] * 100) / 100).toString()
+                      }
+                      if(i != data.general_proba.length - 1) {
+                          res.innerHTML += ", "
+                      }
+
+                      
+                  }
+                  res.innerHTML += "<br />"
+
+                    for(var i = 0; i < data.general_proba.length; i++) {
+                          if(data.general_class == i) {
+                            res.innerHTML += "<strong style='color: red;'>" + data.specific_names[i] + ": " + (Math.round(data.specific_proba[i] * 100) / 100).toString() + "</strong>"
+                          } else {
+                              res.innerHTML += data.specific_names[i]
+                              res.innerHTML += ": "
+                              res.innerHTML += (Math.round(data.specific_proba[i] * 100) / 100).toString()
+                          }
+                          if(i != data.general_proba.length - 1) {
+                              res.innerHTML += ", "
+                          }
+                    }
+                }
+
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1>Prueba de clasificador</h1>
+
+
+        <center>
+            <form>
+                    <textarea id="text" name="text" rows=40 cols=100></textarea>
+            </form>
+        <button onclick="sendtoserver()">Enviar</button>
+
+        <div id="results"></div>
+        </center>
+
+    </body>
+
+</html>
