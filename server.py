@@ -17,10 +17,10 @@ def thread(conn):
         prediction_specific = int(models[prediction].predict([text])[0])
         proba_specific = models[prediction].predict_proba([text])[0,:].tolist()
         conn.send({"general_class": prediction, "general_proba": proba,
-                   "specific_class": prediction_specific,
+                   "specific_class": models[prediction].classes_.tolist().index(prediction_specific),
                    "specific_proba": proba_specific,
                    "general_names": temas.TEMASG,
-                   "specific_names": temas.TEMAS[prediction]})
+                   "specific_names": [temas.TEMAS[prediction][i] for i in models[prediction].classes_]})
 
 class classifierThread():
     def __init__(self):

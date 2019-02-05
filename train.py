@@ -2,11 +2,18 @@ from text_classifier import tclassifier
 import temas
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 
 # load data (will change later)
 import couchdb
 couchdbserver = couchdb.Server()
 db = couchdbserver["noticias2"]
+
+# remove warnings (for now)
+import warnings
+warnings.filterwarnings("ignore")
+
+CV = 10
 
 def tema_a_num(tema):
     try:
@@ -46,14 +53,12 @@ for doc in db.view("error/success"):
 noticias = pd.DataFrame(listnoticia)
 noticias["ct"] = noticias["temag"].apply(tema_a_num)
 
-X_train, X_test, y_train, y_test = train_test_split(noticias["texto"], noticias["ct"], random_state=0)
+X = noticias["texto"]
+y = noticias["ct"]
+tc = tclassifier(name="General")
+tc.fit(X, y)
+print("Precisión validacion cruzada: %.02f, tipo de modelo: %s" % (tc.score__, tc.classifier_type__))
 
-tc = tclassifier()
-tc.fit(X_train, y_train)
-print("Estimated accuracy: %.02f" % tc.score(X_test, y_test))
-
-tc = tclassifier()
-tc.fit(noticias["texto"], noticias["ct"])
 tc.save("models/model.pkl")
 
 # temas especificos
@@ -63,13 +68,12 @@ for i in range(len(temas.TEMASG)):
     tedf = tedf[["cte","texto"]]
     tedf = tedf.dropna()
     tedf["cte"] = tedf["cte"].apply(int)
-    X_train, X_test, y_train, y_test = train_test_split(tedf["texto"], tedf["cte"], random_state=0)
+    X = tedf["texto"]
+    y = tedf["cte"]
 
-    tc = tclassifier()
-    tc.fit(X_train, y_train)
-    print("Estimated accuracy for %s: %.02f" % (temas.TEMASG[i], tc.score(X_test, y_test)))
+    tc = tclassifier(name=temas.TEMASG[i])
+    tc.fit(X, y)
+    print("Precisión validacion cruzada para %s: %.02f, tipo de modelo: %s" % (temas.TEMASG[i], tc.score__, tc.classifier_type__))
 
-    tc = tclassifier()
-    tc.fit(tedf["texto"], tedf["cte"])
     tc.save("models/model%d.pkl" % i)
 

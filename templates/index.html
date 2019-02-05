@@ -33,15 +33,15 @@
                   }
                   res.innerHTML += "<br />"
 
-                    for(var i = 0; i < data.general_proba.length; i++) {
-                          if(data.general_class == i) {
+                    for(var i = 0; i < data.specific_proba.length; i++) {
+                          if(data.specific_class == i) {
                             res.innerHTML += "<strong style='color: red;'>" + data.specific_names[i] + ": " + (Math.round(data.specific_proba[i] * 100) / 100).toString() + "</strong>"
                           } else {
                               res.innerHTML += data.specific_names[i]
                               res.innerHTML += ": "
                               res.innerHTML += (Math.round(data.specific_proba[i] * 100) / 100).toString()
                           }
-                          if(i != data.general_proba.length - 1) {
+                          if(i != data.specific_proba.length - 1) {
                               res.innerHTML += ", "
                           }
                     }
@@ -49,6 +49,18 @@
 
             }
         </script>
+
+        <link href="https://fonts.googleapis.com/css?family=Lato|Roboto" rel="stylesheet">
+        <style>
+html {
+font-family: 'Roboto', sans-serif;
+}
+textarea
+{
+   font-family: 'Lato', sans-serif;
+   font-size: 12pt;
+}
+        </style>
     </head>
 
     <body>
@@ -57,7 +69,7 @@
 
         <center>
             <form>
-                    <textarea id="text" name="text" rows=40 cols=100></textarea>
+                    <textarea id="text" name="text" rows=30 cols=100></textarea>
             </form>
         <button onclick="sendtoserver()">Enviar</button>
 
