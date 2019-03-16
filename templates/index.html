@@ -19,7 +19,7 @@
                   res.innerHTML = ""
                   for(var i = 0; i < data.general_proba.length; i++) {
                       if(data.general_class == i) {
-                        res.innerHTML += "<strong style='color: red;'>" + data.general_names[i] + ": " + (Math.round(data.general_proba[i] * 100) / 100).toString() + "</strong>"
+                        res.innerHTML += "<strong style='color: #EE4C7C;'>" + data.general_names[i] + ": " + (Math.round(data.general_proba[i] * 100) / 100).toString() + "</strong>"
                       } else {
                           res.innerHTML += data.general_names[i]
                           res.innerHTML += ": "
@@ -35,7 +35,7 @@
 
                     for(var i = 0; i < data.specific_proba.length; i++) {
                           if(data.specific_class == i) {
-                            res.innerHTML += "<strong style='color: red;'>" + data.specific_names[i] + ": " + (Math.round(data.specific_proba[i] * 100) / 100).toString() + "</strong>"
+                            res.innerHTML += "<strong style='color: #EE4C7C;'>" + data.specific_names[i] + ": " + (Math.round(data.specific_proba[i] * 100) / 100).toString() + "</strong>"
                           } else {
                               res.innerHTML += data.specific_names[i]
                               res.innerHTML += ": "
@@ -55,10 +55,34 @@
 html {
 font-family: 'Roboto', sans-serif;
 }
+
+body {
+background: #4C495D;
+color: #D1D7E0;
+}
+
 textarea
 {
    font-family: 'Lato', sans-serif;
    font-size: 12pt;
+   color: #D1D7E0;
+   background: #564F6F;
+   border: none;
+}
+
+button {
+  background-color: #564F6F; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+h1 {
+text-align: center;
 }
         </style>
     </head>
@@ -69,7 +93,7 @@ textarea
 
         <center>
             <form>
-                    <textarea id="text" name="text" rows=30 cols=100></textarea>
+                    <textarea id="text" name="text" rows=29 cols=100></textarea>
             </form>
         <button onclick="sendtoserver()">Enviar</button>
 
