@@ -44,7 +44,6 @@ def tester():
 def classify():
     data = request.get_json()
     results = ct.send_data(data["text"])
-    print(results)
     return jsonify(results)
 
 if __name__ == '__main__':

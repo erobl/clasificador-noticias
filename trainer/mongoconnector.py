@@ -7,7 +7,7 @@ strings = {
 }
 
 class MongoConnector(Connector):
-    def __init__(self, url="mongodb://localhost:27017/", database="mediaNet", collection="posts"):
+    def __init__(self, url="mongodb://localhost:27017/", database="mediaNet", collection="posts_edgar2"):
         self.client = pymongo.MongoClient(url)
         self.database = self.client[database]
         self.collection = self.database[collection]

@@ -49,6 +49,8 @@ temas_dic["infraestructura vial y transporte"] = temas_dic["infraestructura y tr
 temas_dic["mundo"] = temas_dic["asuntos internacionales"]
 temas_dic["nacionales"] = temas_dic["política"]
 temas_dic["asuntos"] = temas_dic["asuntos sociales"]
+temas_dic["economia"] = temas_dic["economía"]
+temas_dic["politica"] = temas_dic["política"]
 
 ## Temas específicos
 

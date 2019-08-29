@@ -24,7 +24,7 @@ def download():
     dd = defaultdict(int)
     for doc in mc.getemptynews():
         res = d.process(doc)
-        dd[res.netloc] += 1
+        dd[res.netloc.encode("utf-8")] += 1
         print(dd)
         if res.text is not None:
             mc.inserttext(doc["_id"], res.text)
@@ -106,7 +106,7 @@ def classify():
 
             mc.classifynews(doc["_id"], resdoc, text)
 
-            dd[resdoc["general_prediction"]] += 1
+            dd[resdoc["general_prediction"].encode("utf-8")] += 1
             print(dd)
 
 

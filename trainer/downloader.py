@@ -7,7 +7,7 @@ from collections import namedtuple
 import socket
 
 # timeout in seconds
-timeout = 1
+timeout = 5
 socket.setdefaulttimeout(timeout)
 
 DownloadResult = namedtuple("DownloadResult", "netloc text")
@@ -28,8 +28,9 @@ class Downloader():
                     html = response.read()
             else:
                 netloc = urlparse(url).netloc
-        except:
+        except Exception as e:
             print("Error descargando url:", doc["link"])
+            print("Exception:", e)
             return DownloadResult(None, None)
 
         if netloc == "www.nacion.com":
@@ -43,8 +44,8 @@ class Downloader():
         elif netloc == "www.facebook.com":
             print("Error: Link a facebook en el objeto", doc["_id"])
             # loguear a un archivo
-            with open("facebook.txt", "a") as file:
-                file.write(str(doc))
+            # with open("facebook.txt", "a") as file:
+            #    file.write(str(doc).encode("utf-8"))
             return DownloadResult(netloc, None)
         else:
             print("Error: URL no conocido", netloc)
